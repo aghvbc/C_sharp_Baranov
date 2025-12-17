@@ -15,7 +15,7 @@ class Program
 
         try
         {
-            Console.WriteLine("=== Демонстрация работы программы ===\n");
+            Console.WriteLine("Демонстрация работы программы\n");
 
             // Демонстрация сериализации
             var person = CreateSamplePerson();
@@ -49,7 +49,7 @@ class Program
             serializer.SaveListToFile(people, listFilePath);
             Console.WriteLine($"Список из {people.Count} человек сохранён в: {listFilePath}");
 
-            Console.WriteLine("\n=== Программа завершена успешно ===");
+            Console.WriteLine("\nПрограмма завершена успешно");
         }
         catch (Exception ex)
         {
