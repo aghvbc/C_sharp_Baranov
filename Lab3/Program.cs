@@ -15,9 +15,9 @@ list.Add(50);
 PrintList(list);
 
 Console.WriteLine("\nПоиск элемента 30:");
-Console.WriteLine($"   IndexOf(30) = {list.IndexOf(30)}");
-Console.WriteLine($"   Contains(30) = {list.Contains(30)}");
-Console.WriteLine($"   Contains(999) = {list.Contains(999)}");
+Console.WriteLine($"IndexOf(30) = {list.IndexOf(30)}");
+Console.WriteLine($"Contains(30) = {list.Contains(30)}");
+Console.WriteLine($"Contains(999) = {list.Contains(999)}");
 
 Console.WriteLine("\nВставляем 25 на позицию 2:");
 list.Insert(2, 25);
