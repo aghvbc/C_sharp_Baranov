@@ -36,129 +36,129 @@
 // 3. Компоненты на столе не «теряются» и не перезаписываются агентом раньше времени.
 // 4. Все три ĸурильщиĸа в ĸонечном счёте получают возможность ĸурить.
 
-// using System;
-// using System.Collections.Generic;
-// using System.Data.Common;
-// using System.Text;
-// using System.ComponentModel;
-// using System.Xml.Serialization;
-// using System.Threading;
+using System;
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Text;
+using System.ComponentModel;
+using System.Xml.Serialization;
+using System.Threading;
 
 
-// class Program
-// {
-//     static object lockObject = new object();
-//     static bool paper = false;
-//     static bool tobacco = false;
-//     static bool matches = false;
+class Program
+{
+    static object lockObject = new object();
+    static bool paper = false;
+    static bool tobacco = false;
+    static bool matches = false;
 
-//     static Random random = new Random();
+    static Random random = new Random();
 
-//     static void Main()
-//     {
-//         Thread Agent = new Thread(AgentMethod);
-//         Thread SP = new Thread(SmokerPaper);
-//         Thread SM = new Thread(SmokerMatches);
-//         Thread ST = new Thread(SmokerTobacco);
+    static void Main()
+    {
+        Thread Agent = new Thread(AgentMethod);
+        Thread SP = new Thread(SmokerPaper);
+        Thread SM = new Thread(SmokerMatches);
+        Thread ST = new Thread(SmokerTobacco);
 
-//         Agent.Start();
-//         SP.Start();
-//         SM.Start();
-//         ST.Start();
+        Agent.Start();
+        SP.Start();
+        SM.Start();
+        ST.Start();
 
-//     }
+    }
 
-//     static void AgentMethod()
-//     {
-//         while (true)
-//         {
-//             lock (lockObject)
-//             {
-//                 Console.WriteLine("Агент выложил: ");
-//                 int randomNumber = random.Next(3);
-//                 if (randomNumber == 0)
-//                 {
-//                     paper = true;
-//                     matches = true;
-//                 }
-//                 else if (randomNumber == 1)
-//                 {
-//                     tobacco = true;
-//                     paper = true;
-//                 }
-//                 else if (randomNumber == 2)
-//                 {
-//                     matches = true;
-//                     tobacco = true;
-//                 }
+    static void AgentMethod()
+    {
+        while (true)
+        {
+            lock (lockObject)
+            {
+                Console.WriteLine("Агент выложил: ");
+                int randomNumber = random.Next(3);
+                if (randomNumber == 0)
+                {
+                    paper = true;
+                    matches = true;
+                }
+                else if (randomNumber == 1)
+                {
+                    tobacco = true;
+                    paper = true;
+                }
+                else if (randomNumber == 2)
+                {
+                    matches = true;
+                    tobacco = true;
+                }
 
-//                 Console.WriteLine($"paper: {paper}, tobacco: {tobacco}, matches: {matches}");
-//                 Monitor.PulseAll(lockObject); 
-//                 Monitor.Wait(lockObject);     
-//             }
+                Console.WriteLine($"paper: {paper}, tobacco: {tobacco}, matches: {matches}");
+                Monitor.PulseAll(lockObject); 
+                Monitor.Wait(lockObject);     
+            }
 
-//         }
-//     }
+        }
+    }
 
-//     static void SmokerPaper()
-//     {
-//         while (true)
-//         {
-//             lock (lockObject){
-//                 while (!(tobacco && matches)) {
-//                     {
-//                         Monitor.Wait(lockObject); 
-//                     }
-//                 }
-//                 Thread.Sleep(2000);
-//                 Console.WriteLine("Покурил paper \n");
-//                 tobacco = matches = paper = false;
+    static void SmokerPaper()
+    {
+        while (true)
+        {
+            lock (lockObject){
+                while (!(tobacco && matches)) {
+                    {
+                        Monitor.Wait(lockObject); 
+                    }
+                }
+                Thread.Sleep(2000);
+                Console.WriteLine("Покурил paper \n");
+                tobacco = matches = paper = false;
 
-//                 Monitor.Pulse(lockObject); 
-//             }   
-//         }
-//     }
+                Monitor.Pulse(lockObject); 
+            }   
+        }
+    }
 
-//         static void SmokerTobacco()
-//         {
-//             while (true)
-//             {
-//                 lock (lockObject){
-//                     while (!(paper && matches)) {
-//                         {
-//                             Monitor.Wait(lockObject); 
-//                         }
-//                     }
-//                     Thread.Sleep(2000);
-//                     Console.WriteLine("Покурил tobacco \n");
-//                     tobacco = matches = paper = false;
-//                     Monitor.Pulse(lockObject); 
+        static void SmokerTobacco()
+        {
+            while (true)
+            {
+                lock (lockObject){
+                    while (!(paper && matches)) {
+                        {
+                            Monitor.Wait(lockObject); 
+                        }
+                    }
+                    Thread.Sleep(2000);
+                    Console.WriteLine("Покурил tobacco \n");
+                    tobacco = matches = paper = false;
+                    Monitor.Pulse(lockObject); 
 
-//                 }
-//             }
+                }
+            }
 
-//         }
+        }
 
 
-//     static void SmokerMatches()
-//     {
-//         while (true)
-//         {
-//             lock (lockObject){
-//                 while (!(paper && tobacco)) {
-//                     {
-//                         Monitor.Wait(lockObject); 
-//                     }
-//                 }
-//                 Thread.Sleep(2000);
-//                 Console.WriteLine("Покурил matches \n");
-//                 tobacco = matches = paper = false;
-//                 Monitor.Pulse(lockObject); 
+    static void SmokerMatches()
+    {
+        while (true)
+        {
+            lock (lockObject){
+                while (!(paper && tobacco)) {
+                    {
+                        Monitor.Wait(lockObject); 
+                    }
+                }
+                Thread.Sleep(2000);
+                Console.WriteLine("Покурил matches \n");
+                tobacco = matches = paper = false;
+                Monitor.Pulse(lockObject); 
 
-//             }
+            }
 
-//         }
-//     }
+        }
+    }
 
-// }
+}
 
