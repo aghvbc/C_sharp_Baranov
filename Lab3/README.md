@@ -294,25 +294,4 @@ dotnet test --verbosity normal
 
 ---
 
-## 10. Вопросы для защиты
-
-### IEnumerable и foreach
-
-- `IEnumerable<T>` предоставляет метод `GetEnumerator()`, возвращающий `IEnumerator<T>`
-- `foreach` вызывает `GetEnumerator()`, затем в цикле `MoveNext()` и `Current`
-- Можно реализовать `foreach` без `IEnumerable` (duck typing), но это не рекомендуется
-
-### ICollection vs IList
-
-- `ICollection<T>` — базовые операции без индексов
-- `IList<T>` добавляет: `this[index]`, `IndexOf`, `Insert`, `RemoveAt`
-- Используйте `ICollection` для HashSet, Queue; `IList` для упорядоченных коллекций
-
-### Хеш-таблица
-
-- Ключ преобразуется в индекс через `GetHashCode()` и операцию модуля
-- Коллизии разрешаются цепочками (связные списки в корзинах)
-- Средняя сложность операций O(1), худшая O(n)
-
----
 
